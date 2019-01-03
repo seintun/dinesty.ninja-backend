@@ -39,7 +39,7 @@ func getBizYelp(w http.ResponseWriter, r *http.Request) {
 	bizID := fmt.Sprintf("%v", bizIDkey["businessID"])
 
 	// invoke LoadConfiguration with json file path to get Yelp API info
-	config, _ := LoadConfiguration("config/config.development.json")
+	config, _ := LoadConfiguration("config/config.json")
 	yelpURL := "https://api.yelp.com/v3/businesses/" + bizID
 	bearer := "Bearer " + config.YelpAPI.YelpAPIKey
 	// Send request to api.yelp with businessID and Auth bearer APIKey
