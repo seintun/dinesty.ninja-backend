@@ -14,7 +14,7 @@ $ brew install go
 $ mkdir -p ~/go/{pkg,src,bin}
 ```
 
-## Set Environment variables:
+## Set Environment variables (Depends if you use Bash or Zsh):
 
 Bash
 ```sh
@@ -39,14 +39,15 @@ $ go get -u github.com/gorilla/mux github.com/gorilla/handlers
 1. Visit https://www.yelp.com/developers/v3/manage_app to obtain your API key
 2. Fill-out form under Create New App for testing
 3. Copy API Key after completion
-4. Change the name of "config/example.config.json" to "config/example.config.json"
+4. Change the name of "config/example.config.json" to "config/config.json"
 5. Replace "INSERT YOUR YELP API KEY HERE" with your API Key
 
 ## Test endpoints with Postman
 ```sh
 $ go run *.go
 ```
-1. POST request to http://localhost:8080/biz/validate with following json in the request body
+Send POST request to http://localhost:8080/biz/validate with following json data in the request body as raw with JSON(application/json)
+
 ```sh
 {
 	"businessID": "hog-island-oyster-co-san-francisco"
