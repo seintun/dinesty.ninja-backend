@@ -8,7 +8,7 @@ import (
 
 // BizInfo struct for Business Information from registration
 type BizInfo struct {
-	NinjaID   int64  `json:"ninjaID"`
+	ID        int64  `json:"id"`
 	Name      string `json:"name"`
 	YelpBizID string `json:"yelpBizID"`
 	Phone     string `json:"phone"`
@@ -36,7 +36,7 @@ func registerBiz(w http.ResponseWriter, r *http.Request) {
 	// pass bizDoc as arguments to addBizFirestore func for database storage
 	bizDoc := make(map[string]interface{})
 	bizDocAddress := make(map[string]interface{})
-	bizDoc["ninjaID"] = bizStruct.NinjaID
+	bizDoc["id"] = bizStruct.ID
 	bizDoc["name"] = bizStruct.Name
 	bizDoc["yelpBizID"] = bizStruct.YelpBizID
 	bizDoc["phone"] = bizStruct.Phone
