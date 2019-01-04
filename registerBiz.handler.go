@@ -42,5 +42,6 @@ func registerBiz(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("content-type", "application/json")
+	w.WriteHeader(http.StatusOK)
 	w.Write(bizMarshal)
 }
