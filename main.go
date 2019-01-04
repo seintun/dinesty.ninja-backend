@@ -12,6 +12,7 @@ func main() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/biz/validate", getBizYelp).Methods("POST")
+	router.HandleFunc("/biz/register", registerBiz).Methods("POST")
 
 	routerLogger := handlers.LoggingHandler(os.Stdout, router)
 	http.ListenAndServe(":8080", routerLogger)
