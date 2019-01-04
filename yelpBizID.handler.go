@@ -59,5 +59,5 @@ func getBizYelp(w http.ResponseWriter, r *http.Request) {
 	stringJSON := string(data)
 	rawJSON := json.RawMessage(stringJSON)
 	w.Header().Set("content-type", "application/json")
-	json.NewEncoder(w).Encode(rawJSON)
+	w.Write(rawJSON)
 }
