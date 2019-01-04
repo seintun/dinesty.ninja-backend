@@ -8,7 +8,7 @@ import (
 
 // BizInfo struct for Business Information from registration
 type BizInfo struct {
-	UUID      int64  `json:"uuid"`
+	NinjaID   int64  `json:"ninjaID"`
 	Name      string `json:"name"`
 	YelpBizID string `json:"yelpBizID"`
 	Phone     string `json:"phone"`
@@ -33,10 +33,28 @@ func registerBiz(w http.ResponseWriter, r *http.Request) {
 	var bizStruct BizInfo
 	json.Unmarshal([]byte(string(bizBody)), &bizStruct)
 
-	// JSON data can now be accessed in the form of bizStruct.Address
+	// pass bizDoc as arguments to addBizFirestore func for database storage
+	bizDoc := make(map[string]interface{})
+	bizDocAddress := make(map[string]interface{})
+	bizDoc["ninjaID"] = bizStruct.NinjaID
+	bizDoc["name"] = bizStruct.Name
+	bizDoc["yelpBizID"] = bizStruct.YelpBizID
+	bizDoc["phone"] = bizStruct.Phone
+	bizDoc["address"] = bizDocAddress
+	bizDocAddress["address1"] = bizStruct.Address.Address1
+	bizDocAddress["address2"] = bizStruct.Address.Address2
+	bizDocAddress["city"] = bizStruct.Address.City
+	bizDocAddress["state"] = bizStruct.Address.State
+	bizDocAddress["zipCode"] = bizStruct.Address.ZipCode
+	bizDoc["yelpURL"] = bizStruct.YelpURL
+	bizDoc["img"] = bizStruct.Img
+	bizDoc["cuisine"] = bizStruct.Cuisine
+	bizDoc["reservation"] = bizStruct.Reservation
+	bizDoc["mobilePayment"] = bizStruct.MobilePayment
+	addBizFirestore(bizDoc)
 
-	// Re-formatting the JSON through Marshal to be sent back to the client
-	bizMarshal, err := json.Marshal(bizStruct)
+	// Return JSON as response back to the client
+	bizMarshal, err := json.Marshal(bizDoc)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
