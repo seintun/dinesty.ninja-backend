@@ -28,6 +28,9 @@ func main() {
 	r.HandleFunc("/biz/{id}/menu/{mid}", ctrl.DeleteItemByID).Methods("DELETE")
 
 	r.HandleFunc("/users", ctrl.CreateUser).Methods("POST")
+	r.HandleFunc("/users/{id}", ctrl.FindUserByID).Methods("GET")
+	r.HandleFunc("/users/{id}", ctrl.UpdateUserByID).Methods("PUT")
+	r.HandleFunc("/users/{id}", ctrl.DeleteUserByID).Methods("DELETE")
 
 	rLog := handlers.LoggingHandler(os.Stdout, r)
 	if err := http.ListenAndServe(":8080", rLog); err != nil {
