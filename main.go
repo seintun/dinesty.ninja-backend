@@ -15,6 +15,7 @@ func main() {
 
 	r.HandleFunc("/biz/validate", ctrl.GetBizYelp).Methods("POST")
 	r.HandleFunc("/biz", ctrl.FetchBiz).Methods("GET")
+	r.HandleFunc("/biz/{id}", ctrl.FindBizByID).Methods("GET")
 	r.HandleFunc("/biz/register", ctrl.RegisterBiz).Methods("POST")
 
 	rLog := handlers.LoggingHandler(os.Stdout, r)

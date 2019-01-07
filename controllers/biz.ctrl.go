@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/gorilla/mux"
 	. "github.com/seintun/dinesty.ninja-backend/config"
 	. "github.com/seintun/dinesty.ninja-backend/dao"
 	. "github.com/seintun/dinesty.ninja-backend/models"
@@ -13,22 +14,6 @@ import (
 
 var config = Config{}
 var dao = BizDAO{}
-
-// RegisterBiz POST
-func RegisterBiz(w http.ResponseWriter, r *http.Request) {
-	defer r.Body.Close()
-	var biz Biz
-	if err := json.NewDecoder(r.Body).Decode(&biz); err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
-		return
-	}
-	biz.ID = bson.NewObjectId()
-	if err := dao.Insert(biz); err != nil {
-		respondWithError(w, http.StatusInternalServerError, err.Error())
-		return
-	}
-	respondWithJson(w, http.StatusCreated, biz)
-}
 
 // GetBizYelp POST & YELP GET
 func GetBizYelp(w http.ResponseWriter, r *http.Request) {
@@ -56,7 +41,23 @@ func GetBizYelp(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusCreated, yJSN)
 }
 
-// GET list of movies
+// RegisterBiz insert new business
+func RegisterBiz(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+	var biz Biz
+	if err := json.NewDecoder(r.Body).Decode(&biz); err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	biz.ID = bson.NewObjectId()
+	if err := dao.Insert(biz); err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	respondWithJson(w, http.StatusCreated, biz)
+}
+
+// FetchBiz return list of all businesses
 func FetchBiz(w http.ResponseWriter, r *http.Request) {
 	bizs, err := dao.FetchBiz()
 	if err != nil {
@@ -64,6 +65,17 @@ func FetchBiz(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	respondWithJson(w, http.StatusOK, bizs)
+}
+
+// FindBiz by ID
+func FindBizByID(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	biz, err := dao.FindBizByID(params["id"])
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid Biz ID")
+		return
+	}
+	respondWithJson(w, http.StatusOK, biz)
 }
 
 // respondWithError will identify error msg and respond back to the client
