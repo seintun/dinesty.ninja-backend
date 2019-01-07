@@ -21,6 +21,12 @@ func main() {
 	// r.HandleFunc("/biz/{id}", ctrl.DeactivateBizByID).Methods("PUT")
 	r.HandleFunc("/biz/{id}", ctrl.DeleteBizByID).Methods("DELETE")
 
+	r.HandleFunc("/biz/{id}/menu", ctrl.CreateItem).Methods("POST")
+	r.HandleFunc("/biz/{id}/menu", ctrl.FetchItems).Methods("GET")
+	r.HandleFunc("/biz/{id}/menu/{mid}", ctrl.FindItemByID).Methods("GET")
+	r.HandleFunc("/biz/{id}/menu/{mid}", ctrl.UpdateItemByID).Methods("PUT")
+	r.HandleFunc("/biz/{id}/menu/{mid}", ctrl.DeleteItemByID).Methods("DELETE")
+
 	rLog := handlers.LoggingHandler(os.Stdout, r)
 	if err := http.ListenAndServe(":8080", rLog); err != nil {
 		log.Fatal(err)
