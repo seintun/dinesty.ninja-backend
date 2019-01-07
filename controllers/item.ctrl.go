@@ -63,3 +63,14 @@ func UpdateItemByID(w http.ResponseWriter, r *http.Request) {
 	}
 	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
 }
+
+// DeleteItemByID by ID
+func DeleteItemByID(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	err := dao.DeleteItemByID(params["mid"])
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid item ID")
+		return
+	}
+	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
+}

@@ -36,3 +36,9 @@ func (b *BizDAO) UpdateItemByID(mid string, item Item) error {
 	err := db.C(MCOLLECTION).Update(bson.M{"_id": bson.ObjectIdHex(mid)}, &item)
 	return err
 }
+
+// DeleteItemByID an existing biz
+func (b *BizDAO) DeleteItemByID(mid string) error {
+	err := db.C(MCOLLECTION).Remove(bson.M{"_id": bson.ObjectIdHex(mid)})
+	return err
+}
