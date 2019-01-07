@@ -3,8 +3,8 @@ package dao
 import (
 	"log"
 
-	"github.com/mongodb/mongo-go-driver/bson"
 	. "github.com/seintun/dinesty.ninja-backend/models"
+	"gopkg.in/mgo.v2/bson"
 
 	mgo "gopkg.in/mgo.v2"
 )
@@ -38,12 +38,12 @@ func (b *BizDAO) FetchBiz() ([]Biz, error) {
 	return bizs, err
 }
 
-// // FindById a biz by its id
-// func (b *BizDAO) FindById(id string) (Biz, error) {
-// 	var biz Biz
-// 	err := db.C(COLLECTION).FindId(bson.ObjectIdHex(id)).One(&biz)
-// 	return biz, err
-// }
+// FindBizByID return specified Biz
+func (b *BizDAO) FindBizByID(id string) (Biz, error) {
+	var biz Biz
+	err := db.C(COLLECTION).FindId(bson.ObjectIdHex(id)).One(&biz)
+	return biz, err
+}
 
 // Insert a biz into database
 func (b *BizDAO) Insert(biz Biz) error {
