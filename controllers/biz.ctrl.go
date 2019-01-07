@@ -50,7 +50,7 @@ func RegisterBiz(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	biz.ID = bson.NewObjectId()
-	if err := dao.Insert(biz); err != nil {
+	if err := dao.RegisterBiz(biz); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
