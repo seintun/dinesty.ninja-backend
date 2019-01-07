@@ -14,7 +14,7 @@ func main() {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/biz/validate", ctrl.GetBizYelp).Methods("POST")
-	// r.HandleFunc("/biz", fetchBiz).Methods("GET")
+	r.HandleFunc("/biz", ctrl.FetchBiz).Methods("GET")
 	r.HandleFunc("/biz/register", ctrl.RegisterBiz).Methods("POST")
 
 	rLog := handlers.LoggingHandler(os.Stdout, r)

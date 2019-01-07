@@ -56,6 +56,16 @@ func GetBizYelp(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusCreated, yJSN)
 }
 
+// GET list of movies
+func FetchBiz(w http.ResponseWriter, r *http.Request) {
+	bizs, err := dao.FetchBiz()
+	if err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	respondWithJson(w, http.StatusOK, bizs)
+}
+
 // respondWithError will identify error msg and respond back to the client
 func respondWithError(w http.ResponseWriter, code int, msg string) {
 	respondWithJson(w, code, map[string]string{"error": msg})
