@@ -24,9 +24,9 @@ func (b *BizDAO) FetchItems(id string) ([]Item, error) {
 	return items, err
 }
 
-// // FindItems return specified Biz
-// func (b *BizDAO) FindItems(id string, mid string) (Biz, error) {
-// 	var biz Biz
-// 	err := db.C(COLLECTION).FindId()
-// 	return biz, err
-// }
+// FindItem return specified Biz
+func (b *BizDAO) FindItem(mid string) (Item, error) {
+	var item Item
+	err := db.C(MCOLLECTION).FindId(bson.ObjectIdHex(mid)).One(&item)
+	return item, err
+}

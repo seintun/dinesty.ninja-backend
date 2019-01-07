@@ -23,7 +23,7 @@ func main() {
 
 	r.HandleFunc("/biz/{id}/menu", ctrl.CreateItem).Methods("POST")
 	r.HandleFunc("/biz/{id}/menu", ctrl.FetchItems).Methods("GET")
-	// r.HandleFunc("/biz/{id}/menu/{mid}", ctrl.FindItem).Methods("GET")
+	r.HandleFunc("/biz/{id}/menu/{mid}", ctrl.FindItem).Methods("GET")
 
 	rLog := handlers.LoggingHandler(os.Stdout, r)
 	if err := http.ListenAndServe(":8080", rLog); err != nil {

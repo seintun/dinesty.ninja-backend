@@ -36,13 +36,13 @@ func FetchItems(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, items)
 }
 
-// // FindItem menuItem by bizID
-// func FindItem(w http.ResponseWriter, r *http.Request) {
-// 	params := mux.Vars(r)
-// 	biz, err := dao.FindItem(params["id"], params["mid"])
-// 	if err != nil {
-// 		respondWithError(w, http.StatusBadRequest, "Invalid Menu ID")
-// 		return
-// 	}
-// 	respondWithJson(w, http.StatusOK, biz)
-// }
+// FindItem menuItem by bizID
+func FindItem(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	biz, err := dao.FindItem(params["mid"])
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid Menu ID")
+		return
+	}
+	respondWithJson(w, http.StatusOK, biz)
+}
