@@ -78,6 +78,34 @@ func FindBizByID(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, biz)
 }
 
+// UpdateBizByID by ID
+func UpdateBizByID(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+	var biz Biz
+	if err := json.NewDecoder(r.Body).Decode(&biz); err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	params := mux.Vars(r)
+	err := dao.UpdateBizByID(params["id"], biz)
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid Biz ID")
+		return
+	}
+	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
+}
+
+// // DeactivateBizByID by ID
+// func DeactivateBizByID(w http.ResponseWriter, r *http.Request) {
+// 	params := mux.Vars(r)
+// 	err := dao.DeactivateBizByID(params["id"])
+// 	if err != nil {
+// 		respondWithError(w, http.StatusBadRequest, "Invalid Biz ID")
+// 		return
+// 	}
+// 	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
+// }
+
 // DeleteBiz by ID
 func DeleteBizByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)

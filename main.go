@@ -17,6 +17,8 @@ func main() {
 	r.HandleFunc("/biz/register", ctrl.RegisterBiz).Methods("POST")
 	r.HandleFunc("/biz", ctrl.FetchBiz).Methods("GET")
 	r.HandleFunc("/biz/{id}", ctrl.FindBizByID).Methods("GET")
+	r.HandleFunc("/biz/{id}", ctrl.UpdateBizByID).Methods("PUT")
+	// r.HandleFunc("/biz/{id}", ctrl.DeactivateBizByID).Methods("PUT")
 	r.HandleFunc("/biz/{id}", ctrl.DeleteBizByID).Methods("DELETE")
 
 	rLog := handlers.LoggingHandler(os.Stdout, r)
