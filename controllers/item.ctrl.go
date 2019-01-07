@@ -28,10 +28,21 @@ func CreateItem(w http.ResponseWriter, r *http.Request) {
 // FetchItems all menuItems by bizID
 func FetchItems(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	biz, err := dao.FetchItems(params["id"])
+	items, err := dao.FetchItems(params["id"])
 	if err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid Biz ID")
+		respondWithError(w, http.StatusBadRequest, "Invalid items ID")
 		return
 	}
-	respondWithJson(w, http.StatusOK, biz)
+	respondWithJson(w, http.StatusOK, items)
 }
+
+// // FindItem menuItem by bizID
+// func FindItem(w http.ResponseWriter, r *http.Request) {
+// 	params := mux.Vars(r)
+// 	biz, err := dao.FindItem(params["id"], params["mid"])
+// 	if err != nil {
+// 		respondWithError(w, http.StatusBadRequest, "Invalid Menu ID")
+// 		return
+// 	}
+// 	respondWithJson(w, http.StatusOK, biz)
+// }

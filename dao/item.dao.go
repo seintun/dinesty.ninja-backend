@@ -19,7 +19,14 @@ func (b *BizDAO) CreateItem(item Item) error {
 
 // FetchItems return array of menuItems from specified Biz
 func (b *BizDAO) FetchItems(id string) ([]Item, error) {
-	var item []Item
-	err := db.C(MCOLLECTION).Find(bson.M{}).All(&item)
-	return item, err
+	var items []Item
+	err := db.C(MCOLLECTION).Find(bson.M{"bizid": id}).All(&items)
+	return items, err
 }
+
+// // FindItems return specified Biz
+// func (b *BizDAO) FindItems(id string, mid string) (Biz, error) {
+// 	var biz Biz
+// 	err := db.C(COLLECTION).FindId()
+// 	return biz, err
+// }
