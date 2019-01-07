@@ -24,9 +24,15 @@ func (b *BizDAO) FetchItems(id string) ([]Item, error) {
 	return items, err
 }
 
-// FindItem return specified Biz
-func (b *BizDAO) FindItem(mid string) (Item, error) {
+// FindItemByID return specified Biz
+func (b *BizDAO) FindItemByID(mid string) (Item, error) {
 	var item Item
 	err := db.C(MCOLLECTION).FindId(bson.ObjectIdHex(mid)).One(&item)
 	return item, err
+}
+
+// UpdateItemByID an existing biz
+func (b *BizDAO) UpdateItemByID(mid string, item Item) error {
+	err := db.C(MCOLLECTION).Update(bson.M{"_id": bson.ObjectIdHex(mid)}, &item)
+	return err
 }

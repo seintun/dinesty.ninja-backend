@@ -36,13 +36,30 @@ func FetchItems(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, items)
 }
 
-// FindItem menuItem by bizID
-func FindItem(w http.ResponseWriter, r *http.Request) {
+// FindItemByID menuItem by bizID
+func FindItemByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	biz, err := dao.FindItem(params["mid"])
+	biz, err := dao.FindItemByID(params["mid"])
 	if err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid Menu ID")
 		return
 	}
 	respondWithJson(w, http.StatusOK, biz)
+}
+
+// UpdateItemByID by ID
+func UpdateItemByID(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+	var item Item
+	if err := json.NewDecoder(r.Body).Decode(&item); err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	params := mux.Vars(r)
+	err := dao.UpdateItemByID(params["mid"], item)
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid item ID")
+		return
+	}
+	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
 }
