@@ -1,0 +1,5 @@
+server="<INSERT YOUR SECRET mLAB userInfo HERE INSIDE THE QUOTES>"
+database="dinesty_ninja_db"
+
+yelpURL="https://api.yelp.com/v3/businesses/"
+yelpKey="<INSERT YOUR YELP API KEY HERE INSIDE THE QUOTES>" 

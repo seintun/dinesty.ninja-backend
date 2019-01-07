@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"fmt"
 	"log"
 
 	. "github.com/seintun/dinesty.ninja-backend/models"
@@ -51,11 +52,12 @@ func (b *BizDAO) Insert(biz Biz) error {
 	return err
 }
 
-// // Delete an existing biz
-// func (b *BizDAO) Delete(biz Biz) error {
-// 	err := db.C(COLLECTION).Remove(&biz)
-// 	return err
-// }
+// DeleteBizByID an existing biz
+func (b *BizDAO) DeleteBizByID(id string) error {
+	fmt.Println(bson.ObjectId(id))
+	err := db.C(COLLECTION).Remove(bson.M{"_id": bson.ObjectIdHex(id)})
+	return err
+}
 
 // // Update an existing biz
 // func (b *BizDAO) Update(biz Biz) error {
