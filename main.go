@@ -14,9 +14,10 @@ func main() {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/biz/validate", ctrl.GetBizYelp).Methods("POST")
+	r.HandleFunc("/biz/register", ctrl.RegisterBiz).Methods("POST")
 	r.HandleFunc("/biz", ctrl.FetchBiz).Methods("GET")
 	r.HandleFunc("/biz/{id}", ctrl.FindBizByID).Methods("GET")
-	r.HandleFunc("/biz/register", ctrl.RegisterBiz).Methods("POST")
+	r.HandleFunc("/biz/{id}", ctrl.DeleteBizByID).Methods("DELETE")
 
 	rLog := handlers.LoggingHandler(os.Stdout, r)
 	if err := http.ListenAndServe(":8080", rLog); err != nil {

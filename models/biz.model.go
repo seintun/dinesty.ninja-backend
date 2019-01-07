@@ -25,6 +25,7 @@ type Biz struct {
 	Reservation   bool          `json:"reservation"`
 	MobilePayment bool          `json:"mobilePayment"`
 	Orders        []interface{} `json:"orders"`
+	Active        bool          `json:"active"`
 }
 
 type YelpJSN struct {

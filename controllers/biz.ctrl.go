@@ -78,6 +78,17 @@ func FindBizByID(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, biz)
 }
 
+// DeleteBiz by ID
+func DeleteBizByID(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	err := dao.DeleteBizByID(params["id"])
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid Biz ID")
+		return
+	}
+	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
+}
+
 // respondWithError will identify error msg and respond back to the client
 func respondWithError(w http.ResponseWriter, code int, msg string) {
 	respondWithJson(w, code, map[string]string{"error": msg})
