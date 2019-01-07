@@ -1,19 +1,24 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"os"
 
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	ctrl "github.com/seintun/dinesty.ninja-backend/controllers"
 )
 
 func main() {
-	router := mux.NewRouter()
+	r := mux.NewRouter()
 
-	router.HandleFunc("/biz/validate", getBizYelp).Methods("POST")
-	router.HandleFunc("/biz/register", registerBiz).Methods("POST")
+	r.HandleFunc("/biz/validate", ctrl.GetBizYelp).Methods("POST")
+	r.HandleFunc("/biz", ctrl.FetchBiz).Methods("GET")
+	r.HandleFunc("/biz/register", ctrl.RegisterBiz).Methods("POST")
 
-	routerLogger := handlers.LoggingHandler(os.Stdout, router)
-	http.ListenAndServe(":8080", routerLogger)
+	rLog := handlers.LoggingHandler(os.Stdout, r)
+	if err := http.ListenAndServe(":8080", rLog); err != nil {
+		log.Fatal(err)
+	}
 }
