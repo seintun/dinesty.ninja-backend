@@ -1,6 +1,6 @@
-server="mongodb://ninja:ninja123@ds149491.mlab.com:49491/dinesty_ninja_db"
+server="mongodb://dineninja:pZ%1k26%#jMpK!7aHdUZ@ds149491.mlab.com:49491/dinesty_ninja_db"
 database="dinesty_ninja_db"
 
 yelpURL="https://api.yelp.com/v3/businesses/"
-yelpKey="HHvd5iD1YxEkTaHlFi1_lSrFJE76Yb-xKmNDJnkPMFaRJoTehBuX3BVgDiQKfslO-mSBwZ4BvGrYE6akvWSOCaHcWvVjCmX4fpnd1TUmy4h2Cx3mg4ghsI6KN-8uXHYx"
+yelpKey="825KMIFSOCreWXjfLOUsqqnSqO5NrE2BlDr2rodkOR1mBo0_wwWPUaL6j1kKearE6q_N69SUmZzII3pIe_v1ct6IWI3bsGra1IKswhkxN0xJ5Zi_OLD-rk0Y1bwyXHYx"
 
