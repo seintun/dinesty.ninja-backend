@@ -15,7 +15,7 @@ func main() {
 
 	r.HandleFunc("/biz/validate", ctrl.GetBizYelp).Methods("POST")
 	// r.HandleFunc("/biz", fetchBiz).Methods("GET")
-	// r.HandleFunc("/biz/register", ctrl.RegisterBiz).Methods("POST")
+	r.HandleFunc("/biz/register", ctrl.RegisterBiz).Methods("POST")
 
 	rLog := handlers.LoggingHandler(os.Stdout, r)
 	if err := http.ListenAndServe(":8080", rLog); err != nil {

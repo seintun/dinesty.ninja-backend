@@ -8,10 +8,27 @@ import (
 	. "github.com/seintun/dinesty.ninja-backend/config"
 	. "github.com/seintun/dinesty.ninja-backend/dao"
 	. "github.com/seintun/dinesty.ninja-backend/models"
+	"gopkg.in/mgo.v2/bson"
 )
 
 var config = Config{}
 var dao = BizDAO{}
+
+// RegisterBiz POST
+func RegisterBiz(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+	var biz Biz
+	if err := json.NewDecoder(r.Body).Decode(&biz); err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	biz.ID = bson.NewObjectId()
+	if err := dao.Insert(biz); err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	respondWithJson(w, http.StatusCreated, biz)
+}
 
 // GetBizYelp POST & YELP GET
 func GetBizYelp(w http.ResponseWriter, r *http.Request) {
