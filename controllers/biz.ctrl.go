@@ -28,17 +28,13 @@ func GetBizYelp(w http.ResponseWriter, r *http.Request) {
 	config.Read()
 	yelpURL := config.YelpURL + yID.BusinessID
 	bearer := "Bearer " + config.YelpKey
+	biz, err := dao.FetchYelpJSN(yelpURL, bearer)
 
-	request, _ := http.NewRequest("GET", yelpURL, nil)
-	request.Header.Add("Authorization", bearer)
-	client := &http.Client{}
-	yelpR, _ := client.Do(request)
-	data, _ := ioutil.ReadAll(yelpR.Body)
-	defer yelpR.Body.Close()
-
-	var yJSN YelpJSN
-	json.Unmarshal([]byte(data), &yJSN)
-	respondWithJson(w, http.StatusCreated, yJSN)
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid YelpBiz ID")
+		return
+	}
+	respondWithJson(w, http.StatusOK, biz)
 }
 
 // RegisterBiz insert new biz

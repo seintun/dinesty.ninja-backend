@@ -1,7 +1,10 @@
 package dao
 
 import (
+	"encoding/json"
+	"io/ioutil"
 	"log"
+	"net/http"
 
 	. "github.com/seintun/dinesty.ninja-backend/models"
 	"gopkg.in/mgo.v2/bson"
@@ -31,7 +34,39 @@ func (b *BizDAO) Connect() {
 
 // Queries
 
-// FetchBiz list of bizs
+// FetchYelpJSN biz with Yelp
+func (b *BizDAO) FetchYelpJSN(yelpURL string, bearer string) (BizYelpJSN, error) {
+	request, _ := http.NewRequest("GET", yelpURL, nil)
+	request.Header.Add("Authorization", bearer)
+	client := &http.Client{}
+	yelpR, _ := client.Do(request)
+	data, _ := ioutil.ReadAll(yelpR.Body)
+	defer yelpR.Body.Close()
+
+	var yJSN YelpJSN
+	err := json.Unmarshal([]byte(data), &yJSN)
+	bJSN := BizYelpJSN{
+		YelpBizID: yJSN.Alias,
+		YelpURL:   yJSN.URL,
+		Name:      yJSN.Name,
+		Phone:     yJSN.Phone,
+		Address: Address{
+			Address1: yJSN.Location.Address1,
+			Address2: yJSN.Location.Address2,
+			City:     yJSN.Location.City,
+			State:    yJSN.Location.State,
+			ZipCode:  yJSN.Location.ZipCode,
+		},
+		Img:           yJSN.ImageURL,
+		Cuisine:       yJSN.Categories[0].Title,
+		Reservation:   false,
+		MobilePayment: false,
+		Active:        true,
+	}
+	return bJSN, err
+}
+
+// FetchBiz return list of bizs
 func (b *BizDAO) FetchBiz() ([]Biz, error) {
 	var bizs []Biz
 	err := db.C(BCOLLECTION).Find(bson.M{}).All(&bizs)
