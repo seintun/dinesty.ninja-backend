@@ -68,15 +68,17 @@ func (b *BizDAO) FetchYelpJSN(yelpURL string, bearer string) (BizYelpJSN, error)
 
 // FetchBiz return list of bizs
 func (b *BizDAO) FetchBiz() ([]Biz, error) {
+	query := bson.M{}
 	var bizs []Biz
-	err := db.C(BCOLLECTION).Find(bson.M{}).All(&bizs)
+	err := db.C(BCOLLECTION).Find(query).All(&bizs)
 	return bizs, err
 }
 
 // FindBizByID return specified Biz
 func (b *BizDAO) FindBizByID(id string) (Biz, error) {
+	query := bson.ObjectIdHex(id)
 	var biz Biz
-	err := db.C(BCOLLECTION).FindId(bson.ObjectIdHex(id)).One(&biz)
+	err := db.C(BCOLLECTION).FindId(query).One(&biz)
 	return biz, err
 }
 
@@ -88,7 +90,8 @@ func (b *BizDAO) RegisterBiz(biz Biz) error {
 
 // UpdateBizByID an existing biz
 func (b *BizDAO) UpdateBizByID(id string, biz Biz) error {
-	err := db.C(BCOLLECTION).Update(bson.M{"_id": bson.ObjectIdHex(id)}, &biz)
+	query := bson.M{"_id": bson.ObjectIdHex(id)}
+	err := db.C(BCOLLECTION).Update(query, &biz)
 	return err
 }
 
@@ -100,6 +103,7 @@ func (b *BizDAO) UpdateBizByID(id string, biz Biz) error {
 
 // DeleteBizByID an existing biz
 func (b *BizDAO) DeleteBizByID(id string) error {
-	err := db.C(BCOLLECTION).Remove(bson.M{"_id": bson.ObjectIdHex(id)})
+	query := bson.M{"_id": bson.ObjectIdHex(id)}
+	err := db.C(BCOLLECTION).Remove(query)
 	return err
 }

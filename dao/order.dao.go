@@ -19,14 +19,16 @@ func (b *BizDAO) CreateOrder(o Order) error {
 
 // FindOrderByID return specified user
 func (b *BizDAO) FindOrderByID(id string) (Order, error) {
+	query := bson.ObjectIdHex(id)
 	var o Order
-	err := db.C(OCOLLECTION).FindId(bson.ObjectIdHex(id)).One(&o)
+	err := db.C(OCOLLECTION).FindId(query).One(&o)
 	return o, err
 }
 
 // DeleteOrderByID an existing user
 func (b *BizDAO) DeleteOrderByID(id string) error {
-	err := db.C(OCOLLECTION).Remove(bson.M{"_id": bson.ObjectIdHex(id)})
+	query := bson.M{"_id": bson.ObjectIdHex(id)}
+	err := db.C(OCOLLECTION).Remove(query)
 	return err
 }
 

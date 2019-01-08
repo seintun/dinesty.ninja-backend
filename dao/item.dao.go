@@ -19,26 +19,30 @@ func (b *BizDAO) CreateItem(item Item) error {
 
 // FetchItems return array of menuItems
 func (b *BizDAO) FetchItems(id string) ([]Item, error) {
+	query := bson.M{"bizid": id}
 	var items []Item
-	err := db.C(MCOLLECTION).Find(bson.M{"bizid": id}).All(&items)
+	err := db.C(MCOLLECTION).Find(query).All(&items)
 	return items, err
 }
 
 // FindItemByID return specified menuItem
 func (b *BizDAO) FindItemByID(mid string) (Item, error) {
+	query := bson.ObjectIdHex(mid)
 	var item Item
-	err := db.C(MCOLLECTION).FindId(bson.ObjectIdHex(mid)).One(&item)
+	err := db.C(MCOLLECTION).FindId(query).One(&item)
 	return item, err
 }
 
 // UpdateItemByID an existing menuItem
 func (b *BizDAO) UpdateItemByID(mid string, item Item) error {
-	err := db.C(MCOLLECTION).Update(bson.M{"_id": bson.ObjectIdHex(mid)}, &item)
+	query := bson.M{"_id": bson.ObjectIdHex(mid)}
+	err := db.C(MCOLLECTION).Update(query, &item)
 	return err
 }
 
 // DeleteItemByID an existing menuItem
 func (b *BizDAO) DeleteItemByID(mid string) error {
-	err := db.C(MCOLLECTION).Remove(bson.M{"_id": bson.ObjectIdHex(mid)})
+	query := bson.M{"_id": bson.ObjectIdHex(mid)}
+	err := db.C(MCOLLECTION).Remove(query)
 	return err
 }
