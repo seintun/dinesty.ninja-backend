@@ -15,7 +15,7 @@ import (
 var config = Config{}
 var dao = BizDAO{}
 
-// GetBizYelp POST & YELP GET
+// GetBizYelp POST & YELP GET JSON API
 func GetBizYelp(w http.ResponseWriter, r *http.Request) {
 	rB, _ := ioutil.ReadAll(r.Body)
 	var yID YelpID
@@ -41,7 +41,7 @@ func GetBizYelp(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusCreated, yJSN)
 }
 
-// RegisterBiz insert new business
+// RegisterBiz insert new biz
 func RegisterBiz(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	var biz Biz
@@ -57,7 +57,7 @@ func RegisterBiz(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusCreated, biz)
 }
 
-// FetchBiz return list of all businesses
+// FetchBiz return list of all biz
 func FetchBiz(w http.ResponseWriter, r *http.Request) {
 	bizs, err := dao.FetchBiz()
 	if err != nil {
@@ -67,7 +67,7 @@ func FetchBiz(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, bizs)
 }
 
-// FindBiz by ID
+// FindBiz return specified biz
 func FindBizByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	biz, err := dao.FindBizByID(params["id"])
@@ -78,7 +78,7 @@ func FindBizByID(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, biz)
 }
 
-// UpdateBizByID by ID
+// UpdateBizByID update specified biz
 func UpdateBizByID(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	var biz Biz
@@ -95,7 +95,7 @@ func UpdateBizByID(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
 }
 
-// // DeactivateBizByID by ID
+// // DeactivateBizByID
 // func DeactivateBizByID(w http.ResponseWriter, r *http.Request) {
 // 	params := mux.Vars(r)
 // 	err := dao.DeactivateBizByID(params["id"])
@@ -106,7 +106,7 @@ func UpdateBizByID(w http.ResponseWriter, r *http.Request) {
 // 	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
 // }
 
-// DeleteBiz by ID
+// DeleteBiz delete biz
 func DeleteBizByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	err := dao.DeleteBizByID(params["id"])

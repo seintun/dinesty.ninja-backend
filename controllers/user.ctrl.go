@@ -25,7 +25,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusCreated, u)
 }
 
-// FindUserByID by ID
+// FindUserByID return specified user
 func FindUserByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	u, err := dao.FindUserByID(params["id"])
@@ -36,7 +36,7 @@ func FindUserByID(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, u)
 }
 
-// UpdateUserByID by ID
+// UpdateUserByID update specified user
 func UpdateUserByID(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	var u User
@@ -53,7 +53,7 @@ func UpdateUserByID(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
 }
 
-// DeleteUserByID by ID
+// DeleteUserByID delete specified user
 func DeleteUserByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	err := dao.DeleteUserByID(params["id"])
