@@ -15,7 +15,7 @@ type Order struct {
 	UserName  string        `json:"userName"`
 	Guests    int           `json:"guests"`
 	Date      time.Time     `json:"date"`
-	MenuItems []interface{} `json:"menuItems"`
+	MenuItems []Item        `json:"menuItems"`
 	Paid      bool          `json:"paid"`
 	Cancelled bool          `json:"cancelled"`
 	Total     int           `json:"total"`
