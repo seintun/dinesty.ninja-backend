@@ -32,6 +32,8 @@ func main() {
 	r.HandleFunc("/users/{id}", ctrl.UpdateUserByID).Methods("PUT")
 	r.HandleFunc("/users/{id}", ctrl.DeleteUserByID).Methods("DELETE")
 
+	r.HandleFunc("/orders", ctrl.CreateOrder).Methods("POST")
+
 	rLog := handlers.LoggingHandler(os.Stdout, r)
 	if err := http.ListenAndServe(":8080", rLog); err != nil {
 		log.Fatal(err)
