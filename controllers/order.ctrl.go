@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/gorilla/mux"
 	. "github.com/seintun/dinesty.ninja-backend/models"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -22,4 +23,26 @@ func CreateOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	respondWithJson(w, http.StatusCreated, o)
+}
+
+// FindOrderByID return specified order
+func FindOrderByID(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	o, err := dao.FindOrderByID(params["id"])
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid user ID")
+		return
+	}
+	respondWithJson(w, http.StatusOK, o)
+}
+
+// DeleteOrderByID delete specified order
+func DeleteOrderByID(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	err := dao.DeleteOrderByID(params["id"])
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid order ID")
+		return
+	}
+	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
 }
