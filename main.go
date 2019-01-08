@@ -36,6 +36,9 @@ func main() {
 	r.HandleFunc("/orders/{id}", ctrl.FindOrderByID).Methods("GET")
 	r.HandleFunc("/orders/{id}", ctrl.DeleteOrderByID).Methods("DELETE")
 
+	port := ":8080"
+	log.Println("# Welcome to Dinesty.ninja, where our ninjas can infiltrate the wait to dine stealthly and rapidly! #")
+	log.Println("###   A ninja(忍者 or 忍び) is listening your honorable commands on", port)
 	rLog := handlers.LoggingHandler(os.Stdout, r)
 	if err := http.ListenAndServe(":8080", rLog); err != nil {
 		log.Fatal(err)
