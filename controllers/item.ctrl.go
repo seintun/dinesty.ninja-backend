@@ -9,7 +9,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-// RegisterBiz insert new business
+// CreateItem insert new business
 func CreateItem(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	var item Item
@@ -25,7 +25,7 @@ func CreateItem(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusCreated, item)
 }
 
-// FetchItems all menuItems by bizID
+// FetchItems return all menuItems by itemID
 func FetchItems(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	items, err := dao.FetchItems(params["id"])
@@ -36,7 +36,7 @@ func FetchItems(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, items)
 }
 
-// FindItemByID menuItem by bizID
+// FindItemByID return specified menuItem by itemID
 func FindItemByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	biz, err := dao.FindItemByID(params["mid"])
@@ -47,7 +47,7 @@ func FindItemByID(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, biz)
 }
 
-// UpdateItemByID by ID
+// UpdateItemByID update specified menuItem by itemID
 func UpdateItemByID(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	var item Item
@@ -64,7 +64,7 @@ func UpdateItemByID(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
 }
 
-// DeleteItemByID by ID
+// DeleteItemByID delete specified menuItem by itemID
 func DeleteItemByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	err := dao.DeleteItemByID(params["mid"])
