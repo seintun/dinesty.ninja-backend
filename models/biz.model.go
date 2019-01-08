@@ -2,6 +2,7 @@ package models
 
 import "gopkg.in/mgo.v2/bson"
 
+// YelpID composes of bizID for API GET req
 type YelpID struct {
 	BusinessID string `json:"businessID"`
 }
@@ -28,6 +29,7 @@ type Biz struct {
 	Active        bool          `json:"active"`
 }
 
+// YelpJSN struct for incoming JSN from API
 type YelpJSN struct {
 	ID           string `json:"id"`
 	Alias        string `json:"alias"`
@@ -72,4 +74,27 @@ type YelpJSN struct {
 		IsOpenNow bool   `json:"is_open_now"`
 	} `json:"hours"`
 	Transactions []interface{} `json:"transactions"`
+}
+
+// Address struct for address details
+type Address struct {
+	Address1 string `json:"address1"`
+	Address2 string `json:"address2"`
+	City     string `json:"city"`
+	State    string `json:"state"`
+	ZipCode  string `json:"zipCode"`
+}
+
+// BizYelpJSN struct for compsing data of return Yelp JSN
+type BizYelpJSN struct {
+	YelpBizID     string  `json:"yelpBizID"`
+	YelpURL       string  `json:"yelpURL"`
+	Name          string  `json:"name"`
+	Phone         string  `json:"phone"`
+	Address       Address `json:"address"`
+	Img           string  `json:"img"`
+	Cuisine       string  `json:"cuisine"`
+	Reservation   bool    `json:"reservation"`
+	MobilePayment bool    `json:"mobilePayment"`
+	Active        bool    `json:"active"`
 }
