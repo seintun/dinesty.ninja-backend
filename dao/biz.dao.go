@@ -17,7 +17,7 @@ type BizDAO struct {
 var db *mgo.Database
 
 const (
-	COLLECTION = "business"
+	BCOLLECTION = "business"
 )
 
 // Connect Establish a connection to database
@@ -31,46 +31,40 @@ func (b *BizDAO) Connect() {
 
 // Queries
 
-// FindAll list of bizs
+// FetchBiz list of bizs
 func (b *BizDAO) FetchBiz() ([]Biz, error) {
 	var bizs []Biz
-	err := db.C(COLLECTION).Find(bson.M{}).All(&bizs)
+	err := db.C(BCOLLECTION).Find(bson.M{}).All(&bizs)
 	return bizs, err
 }
 
 // FindBizByID return specified Biz
 func (b *BizDAO) FindBizByID(id string) (Biz, error) {
 	var biz Biz
-	err := db.C(COLLECTION).FindId(bson.ObjectIdHex(id)).One(&biz)
+	err := db.C(BCOLLECTION).FindId(bson.ObjectIdHex(id)).One(&biz)
 	return biz, err
 }
 
-// Insert a biz into database
-func (b *BizDAO) Insert(biz Biz) error {
-	err := db.C(COLLECTION).Insert(&biz)
+// RegisterBiz a biz into database
+func (b *BizDAO) RegisterBiz(biz Biz) error {
+	err := db.C(BCOLLECTION).Insert(&biz)
 	return err
 }
 
 // UpdateBizByID an existing biz
 func (b *BizDAO) UpdateBizByID(id string, biz Biz) error {
-	err := db.C(COLLECTION).Update(bson.M{"_id": bson.ObjectIdHex(id)}, &biz)
+	err := db.C(BCOLLECTION).Update(bson.M{"_id": bson.ObjectIdHex(id)}, &biz)
 	return err
 }
 
 // // DeactivateBizByID an existing biz
 // func (b *BizDAO) DeactivateBizByID(id string) error {
-// 	err := db.C(COLLECTION).Update(bson.ObjectIdHex(id), {$set:{"active":false}})
+// 	err := db.C(BCOLLECTION).Update(bson.ObjectIdHex(id), {$set:{"active":false}})
 // 	return err
 // }
 
 // DeleteBizByID an existing biz
 func (b *BizDAO) DeleteBizByID(id string) error {
-	err := db.C(COLLECTION).Remove(bson.M{"_id": bson.ObjectIdHex(id)})
+	err := db.C(BCOLLECTION).Remove(bson.M{"_id": bson.ObjectIdHex(id)})
 	return err
 }
-
-// // Update an existing biz
-// func (b *BizDAO) Update(biz Biz) error {
-// 	err := db.C(COLLECTION).UpdateId(biz.ID, &biz)
-// 	return err
-// }
