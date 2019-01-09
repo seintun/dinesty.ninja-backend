@@ -17,6 +17,17 @@ func (b *BizDAO) CreateItem(item Item) error {
 	return err
 }
 
+// ImportJSON insert array of menuItem objects by iterating into database
+func (b *BizDAO) ImportJSON(iJSN []Item) error {
+	var i []interface{}
+	for _, t := range iJSN {
+		t.ID = bson.NewObjectId()
+		i = append(i, t)
+	}
+	err := db.C(MCOLLECTION).Insert(i...)
+	return err
+}
+
 // FetchItems return array of menuItems
 func (b *BizDAO) FetchItems(id string) ([]Item, error) {
 	query := bson.M{"bizid": id}
