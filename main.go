@@ -35,6 +35,7 @@ func main() {
 	r.HandleFunc("/orders", ctrl.CreateOrder).Methods("POST")
 	r.HandleFunc("/orders/{id}", ctrl.FindOrderByID).Methods("GET")
 	r.HandleFunc("/orders/{id}", ctrl.DeleteOrderByID).Methods("DELETE")
+	r.HandleFunc("/orders/{id}/menu", ctrl.AddItemtoMenu).Methods("PUT")
 
 	port := ":8080"
 	log.Println("# Welcome to Dinesty.ninja, where our ninjas can infiltrate the wait to dine stealthly and rapidly! #")

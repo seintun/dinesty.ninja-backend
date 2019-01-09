@@ -46,3 +46,20 @@ func DeleteOrderByID(w http.ResponseWriter, r *http.Request) {
 	}
 	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
 }
+
+// AddItemtoMenu update specified menuItem by itemID
+func AddItemtoMenu(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+	var item Item
+	if err := json.NewDecoder(r.Body).Decode(&item); err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	params := mux.Vars(r)
+	err := dao.AddItemtoMenu(params["id"], item)
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid item ID")
+		return
+	}
+	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
+}

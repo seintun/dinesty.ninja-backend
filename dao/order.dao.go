@@ -11,7 +11,7 @@ const (
 
 // Queries
 
-// Insert a user into database
+// CreateOrder insert a user into database
 func (b *BizDAO) CreateOrder(o Order) error {
 	err := db.C(OCOLLECTION).Insert(&o)
 	return err
@@ -27,5 +27,13 @@ func (b *BizDAO) FindOrderByID(id string) (Order, error) {
 // DeleteOrderByID an existing user
 func (b *BizDAO) DeleteOrderByID(id string) error {
 	err := db.C(OCOLLECTION).Remove(bson.M{"_id": bson.ObjectIdHex(id)})
+	return err
+}
+
+// AddItemtoMenu an existing menuItem
+func (b *BizDAO) AddItemtoMenu(id string, item Item) error {
+	query := bson.M{"_id": bson.ObjectIdHex(id)}
+	insert := bson.M{"$push": bson.M{"menuitems": &item}}
+	err := db.C(OCOLLECTION).Update(query, insert)
 	return err
 }
