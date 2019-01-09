@@ -47,8 +47,8 @@ func DeleteOrderByID(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
 }
 
-// AddItemtoMenu update specified menuItem by itemID
-func AddItemtoMenu(w http.ResponseWriter, r *http.Request) {
+// AddItemtoCart update specified menuItem by itemID
+func AddItemtoCart(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	var item Item
 	if err := json.NewDecoder(r.Body).Decode(&item); err != nil {
@@ -56,9 +56,20 @@ func AddItemtoMenu(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	params := mux.Vars(r)
-	err := dao.AddItemtoMenu(params["id"], item)
+	err := dao.AddItemtoCart(params["id"], item)
 	if err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid item ID")
+		return
+	}
+	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
+}
+
+// DeleteItemfromCart update specified menuItem by itemID
+func DeleteItemfromCart(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	err := dao.DeleteItemfromCart(params["id"], params["cid"])
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid params ID")
 		return
 	}
 	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})

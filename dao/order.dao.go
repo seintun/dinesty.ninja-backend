@@ -1,6 +1,8 @@
 package dao
 
 import (
+	"fmt"
+
 	. "github.com/seintun/dinesty.ninja-backend/models"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -32,10 +34,21 @@ func (b *BizDAO) DeleteOrderByID(id string) error {
 	return err
 }
 
-// AddItemtoMenu an existing menuItem
-func (b *BizDAO) AddItemtoMenu(id string, item Item) error {
+// AddItemtoCart an existing menuItem
+func (b *BizDAO) AddItemtoCart(id string, item Item) error {
 	query := bson.M{"_id": bson.ObjectIdHex(id)}
-	insert := bson.M{"$push": bson.M{"menuitems": &item}}
+	insert := bson.M{"$push": bson.M{"cart": &item}}
 	err := db.C(OCOLLECTION).Update(query, insert)
+	return err
+}
+
+// DeleteItemfromCart an existing menuItem
+func (b *BizDAO) DeleteItemfromCart(id string, cid string) error {
+	query := bson.M{"_id": bson.ObjectIdHex(id)}
+	item := bson.M{"cart": bson.M{"_id": bson.ObjectIdHex(cid)}}
+	itemtoRemove := bson.M{"$pull": item}
+	fmt.Println(id)
+	fmt.Println(cid)
+	err := db.C(OCOLLECTION).Update(query, itemtoRemove)
 	return err
 }
