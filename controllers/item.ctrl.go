@@ -37,7 +37,7 @@ func ImportJSON(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	respondWithJson(w, http.StatusCreated, map[string]string{"result": "success"})
+	respondWithJson(w, http.StatusCreated, iJSN)
 }
 
 // FetchItems return all menuItems by itemID
