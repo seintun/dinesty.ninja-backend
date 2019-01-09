@@ -25,6 +25,21 @@ func CreateItem(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusCreated, item)
 }
 
+// ImportJSON passes array of menuItem objects JSON into dao.ImportJSON
+func ImportJSON(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+	var iJSN []Item
+	if err := json.NewDecoder(r.Body).Decode(&iJSN); err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	if err := dao.ImportJSON(iJSN); err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	respondWithJson(w, http.StatusCreated, map[string]string{"result": "success"})
+}
+
 // FetchItems return all menuItems by itemID
 func FetchItems(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
