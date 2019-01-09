@@ -129,9 +129,7 @@ func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
 // Parse the configuration file 'config.toml', and establish a connection to DB
 func init() {
 	config.Read()
-
 	dao.Server = config.Server
 	dao.Database = config.Database
-
 	dao.Connect()
 }
