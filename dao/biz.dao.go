@@ -68,7 +68,7 @@ func (b *BizDAO) FetchYelpJSN(yelpURL string, bearer string) (BizYelpJSN, error)
 
 // FetchBiz return list of bizs
 func (b *BizDAO) FetchBiz() ([]Biz, error) {
-	query := bson.M{}
+	query := bson.M{"active": true}
 	var bizs []Biz
 	err := db.C(BCOLLECTION).Find(query).All(&bizs)
 	return bizs, err
