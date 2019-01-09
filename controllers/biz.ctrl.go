@@ -91,18 +91,18 @@ func UpdateBizByID(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
 }
 
-// // DeactivateBizByID
-// func DeactivateBizByID(w http.ResponseWriter, r *http.Request) {
-// 	params := mux.Vars(r)
-// 	err := dao.DeactivateBizByID(params["id"])
-// 	if err != nil {
-// 		respondWithError(w, http.StatusBadRequest, "Invalid Biz ID")
-// 		return
-// 	}
-// 	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
-// }
+// DeactivateBizByID will change the active bool to false
+func DeactivateBizByID(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	err := dao.DeactivateBizByID(params["id"])
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid Biz ID")
+		return
+	}
+	respondWithJson(w, http.StatusOK, map[string]string{"result": "Your business has been deactivated"})
+}
 
-// DeleteBiz delete biz
+// DeleteBizByID deletes biz from the database
 func DeleteBizByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	err := dao.DeleteBizByID(params["id"])
