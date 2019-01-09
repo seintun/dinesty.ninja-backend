@@ -21,12 +21,12 @@ type Biz struct {
 		State    string `json:"state"`
 		ZipCode  string `json:"zipCode"`
 	} `json:"address"`
-	Img           string        `json:"img"`
-	Cuisine       string        `json:"cuisine"`
-	Reservation   bool          `json:"reservation"`
-	MobilePayment bool          `json:"mobilePayment"`
-	Orders        []interface{} `json:"orders"`
-	Active        bool          `json:"active"`
+	Img           string   `json:"img"`
+	Cuisine       string   `json:"cuisine"`
+	Reservation   bool     `json:"reservation"`
+	MobilePayment bool     `json:"mobilePayment"`
+	Orders        []string `json:"orders"`
+	Active        bool     `json:"active"`
 }
 
 // YelpJSN struct for incoming JSN from API
