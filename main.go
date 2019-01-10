@@ -18,7 +18,7 @@ func main() {
 	r.HandleFunc("/biz", ctrl.FetchBiz).Methods("GET")
 	r.HandleFunc("/biz/{id}", ctrl.FindBizByID).Methods("GET")
 	r.HandleFunc("/biz/{id}", ctrl.UpdateBizByID).Methods("PUT")
-	// r.HandleFunc("/biz/{id}", ctrl.DeactivateBizByID).Methods("PUT")
+	r.HandleFunc("/biz/{id}/deactivate", ctrl.DeactivateBizByID).Methods("PUT")
 	r.HandleFunc("/biz/{id}", ctrl.DeleteBizByID).Methods("DELETE")
 
 	r.HandleFunc("/biz/{id}/menu", ctrl.CreateItem).Methods("POST")
@@ -39,9 +39,12 @@ func main() {
 	r.HandleFunc("/orders/{id}/cart", ctrl.AddItemtoCart).Methods("PUT")
 	r.HandleFunc("/orders/{id}/cart/{cid}", ctrl.DeleteItemfromCart).Methods("PUT")
 
-	port := ":8080"
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 	log.Println("# Welcome to Dinesty.ninja, where our ninjas can infiltrate the wait to dine stealthly and rapidly! #")
-	log.Println("###   A ninja(忍者 or 忍び) is listening your honorable commands on", port)
+	log.Println("###   A ninja(忍者 or 忍び) is listening your honorable commands on port:", port)
 	rLog := handlers.LoggingHandler(os.Stdout, r)
 	if err := http.ListenAndServe(":8080", rLog); err != nil {
 		log.Fatal(err)

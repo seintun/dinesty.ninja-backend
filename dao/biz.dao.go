@@ -68,7 +68,7 @@ func (b *BizDAO) FetchYelpJSN(yelpURL string, bearer string) (BizYelpJSN, error)
 
 // FetchBiz return list of bizs
 func (b *BizDAO) FetchBiz() ([]Biz, error) {
-	query := bson.M{}
+	query := bson.M{"active": true}
 	var bizs []Biz
 	err := db.C(BCOLLECTION).Find(query).All(&bizs)
 	return bizs, err
@@ -95,11 +95,13 @@ func (b *BizDAO) UpdateBizByID(id string, biz Biz) error {
 	return err
 }
 
-// // DeactivateBizByID an existing biz
-// func (b *BizDAO) DeactivateBizByID(id string) error {
-// 	err := db.C(BCOLLECTION).Update(bson.ObjectIdHex(id), {$set:{"active":false}})
-// 	return err
-// }
+// DeactivateBizByID an existing biz
+func (b *BizDAO) DeactivateBizByID(id string) error {
+	query := bson.M{"_id": bson.ObjectIdHex(id)}
+	deactived := bson.M{"$set": bson.M{"active": false}}
+	err := db.C(BCOLLECTION).Update(query, deactived)
+	return err
+}
 
 // DeleteBizByID an existing biz
 func (b *BizDAO) DeleteBizByID(id string) error {
