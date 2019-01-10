@@ -38,6 +38,14 @@ func (b *BizDAO) UpdateOrderByID(id string, o Order) error {
 	return err
 }
 
+// CancelOrderByID an existing biz
+func (b *BizDAO) CancelOrderByID(id string) error {
+	query := bson.M{"_id": bson.ObjectIdHex(id)}
+	cancel := bson.M{"$set": bson.M{"cancelled": true}}
+	err := db.C(OCOLLECTION).Update(query, cancel)
+	return err
+}
+
 // DeleteOrderByID an existing order
 func (b *BizDAO) DeleteOrderByID(id string) error {
 	query := bson.M{"_id": bson.ObjectIdHex(id)}
