@@ -40,6 +40,7 @@ func main() {
 	r.HandleFunc("/orders", ctrl.CreateOrder).Methods("POST")
 	r.HandleFunc("/orders/{id}", ctrl.FindOrderByID).Methods("GET")
 	r.HandleFunc("/orders/{id}", ctrl.UpdateOrderByID).Methods("PUT")
+	r.HandleFunc("/orders/{id}/cancel", ctrl.CancelOrderByID).Methods("PUT")
 	r.HandleFunc("/orders/{id}", ctrl.DeleteOrderByID).Methods("DELETE")
 	r.HandleFunc("/orders/{id}/cart", ctrl.AddItemtoCart).Methods("PUT")
 	r.HandleFunc("/orders/{id}/cart/{cid}", ctrl.DeleteItemfromCart).Methods("PUT")

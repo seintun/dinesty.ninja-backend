@@ -53,6 +53,17 @@ func UpdateOrderByID(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, o)
 }
 
+// CancelOrderByID will change the active bool to false
+func CancelOrderByID(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	err := dao.CancelOrderByID(params["id"])
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid order ID")
+		return
+	}
+	respondWithJson(w, http.StatusOK, map[string]string{"result": "Your order has been cancelled"})
+}
+
 // DeleteOrderByID delete specified order
 func DeleteOrderByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
