@@ -31,6 +31,13 @@ func (b *BizDAO) FindOrderByID(id string) (Order, error) {
 	return o, err
 }
 
+// UpdateOrderByID an existing order
+func (b *BizDAO) UpdateOrderByID(id string, o Order) error {
+	query := bson.M{"_id": bson.ObjectIdHex(id)}
+	err := db.C(OCOLLECTION).Update(query, &o)
+	return err
+}
+
 // DeleteOrderByID an existing order
 func (b *BizDAO) DeleteOrderByID(id string) error {
 	query := bson.M{"_id": bson.ObjectIdHex(id)}
