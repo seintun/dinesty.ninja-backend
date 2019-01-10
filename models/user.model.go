@@ -9,5 +9,5 @@ type User struct {
 	Email    string        `json:"email"`
 	Password string        `json:"password"`
 	Phone    string        `json:"phone"`
-	Orders   []interface{} `json:"orders"`
+	Orders   []string      `json:"orders"`
 }

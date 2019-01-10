@@ -1,8 +1,6 @@
 package dao
 
 import (
-	"fmt"
-
 	. "github.com/seintun/dinesty.ninja-backend/models"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -13,13 +11,19 @@ const (
 
 // Queries
 
-// CreateOrder insert a user into database
+// CreateOrder insert new order into order database, and push orderID into user and biz orders[]
 func (b *BizDAO) CreateOrder(o Order) error {
+	uQuery := bson.M{"_id": bson.ObjectIdHex(o.UserID)}
+	bQuery := bson.M{"_id": bson.ObjectIdHex(o.BizID)}
+	uInsert := bson.M{"$push": bson.M{"orders": o.ID.Hex()}}
+	bInsert := bson.M{"$push": bson.M{"orders": o.ID.Hex()}}
 	err := db.C(OCOLLECTION).Insert(&o)
+	db.C(UCOLLECTION).Update(uQuery, uInsert)
+	db.C(BCOLLECTION).Update(bQuery, bInsert)
 	return err
 }
 
-// FindOrderByID return specified user
+// FindOrderByID return specified order
 func (b *BizDAO) FindOrderByID(id string) (Order, error) {
 	query := bson.ObjectIdHex(id)
 	var o Order
@@ -27,14 +31,14 @@ func (b *BizDAO) FindOrderByID(id string) (Order, error) {
 	return o, err
 }
 
-// DeleteOrderByID an existing user
+// DeleteOrderByID an existing order
 func (b *BizDAO) DeleteOrderByID(id string) error {
 	query := bson.M{"_id": bson.ObjectIdHex(id)}
 	err := db.C(OCOLLECTION).Remove(query)
 	return err
 }
 
-// AddItemtoCart an existing menuItem
+// AddItemtoCart an existing cart
 func (b *BizDAO) AddItemtoCart(id string, item Item) error {
 	query := bson.M{"_id": bson.ObjectIdHex(id)}
 	insert := bson.M{"$push": bson.M{"cart": &item}}
@@ -42,13 +46,11 @@ func (b *BizDAO) AddItemtoCart(id string, item Item) error {
 	return err
 }
 
-// DeleteItemfromCart an existing menuItem
+// DeleteItemfromCart an existing cart
 func (b *BizDAO) DeleteItemfromCart(id string, cid string) error {
 	query := bson.M{"_id": bson.ObjectIdHex(id)}
 	item := bson.M{"cart": bson.M{"_id": bson.ObjectIdHex(cid)}}
 	itemtoRemove := bson.M{"$pull": item}
-	fmt.Println(id)
-	fmt.Println(cid)
 	err := db.C(OCOLLECTION).Update(query, itemtoRemove)
 	return err
 }
