@@ -36,6 +36,28 @@ func FindOrderByID(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, o)
 }
 
+// FetchOrdersByuserID return specified order
+func FetchOrdersByuserID(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	o, err := dao.FetchOrdersByuserID(params["id"])
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid user ID")
+		return
+	}
+	respondWithJson(w, http.StatusOK, o)
+}
+
+// FetchOrdersBybizID return specified order
+func FetchOrdersBybizID(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	o, err := dao.FetchOrdersBybizID(params["id"])
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid business ID")
+		return
+	}
+	respondWithJson(w, http.StatusOK, o)
+}
+
 // UpdateOrderByID update specified order
 func UpdateOrderByID(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
