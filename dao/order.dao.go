@@ -39,6 +39,14 @@ func (b *BizDAO) FetchOrdersByuserID(id string) ([]Order, error) {
 	return o, err
 }
 
+// FetchOrdersBybizID return all orders of specified user
+func (b *BizDAO) FetchOrdersBybizID(id string) ([]Order, error) {
+	query := bson.M{"bizid": id}
+	var o []Order
+	err := db.C(OCOLLECTION).Find(query).All(&o)
+	return o, err
+}
+
 // UpdateOrderByID an existing order
 func (b *BizDAO) UpdateOrderByID(id string, o Order) error {
 	query := bson.M{"_id": bson.ObjectIdHex(id)}
