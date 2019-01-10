@@ -1,5 +1,5 @@
-server="mongodb://testninja:password123@ds149491.mlab.com:49491/dinesty_ninja_db"
+server="<INSERT YOUR SECRET mLAB userInfo HERE INSIDE THE QUOTES>"
 database="dinesty_ninja_db"
 
 yelpURL="https://api.yelp.com/v3/businesses/"
-yelpKey="WWZ_RGmgqAfKbGMg80ffJ4bgzzDsO3PZGfXASTkkEeBb6Xi4Ue9C6gF1vp5MRxXze0IlgRIDPotXy6kQRaIMUkZ-r9ST2HsloZQTDVYjX2sOCpk9ymvYkU-fNP4zXHYx"
+yelpKey="<INSERT YOUR YELP API KEY HERE INSIDE THE QUOTES>"
