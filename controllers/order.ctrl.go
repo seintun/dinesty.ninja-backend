@@ -36,6 +36,23 @@ func FindOrderByID(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, o)
 }
 
+// UpdateOrderByID update specified order
+func UpdateOrderByID(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+	var o Order
+	if err := json.NewDecoder(r.Body).Decode(&o); err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	params := mux.Vars(r)
+	err := dao.UpdateOrderByID(params["id"], o)
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid order ID")
+		return
+	}
+	respondWithJson(w, http.StatusOK, o)
+}
+
 // DeleteOrderByID delete specified order
 func DeleteOrderByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
