@@ -34,9 +34,9 @@ func (b *BizDAO) Connect() {
 
 // Queries
 
-// FetchYelpJSN biz with Yelp
-func (b *BizDAO) FetchYelpJSN(yelpURL string, bearer string) (BizYelpJSN, error) {
-	request, _ := http.NewRequest("GET", yelpURL, nil)
+// ValidateYelp biz with Yelp
+func (b *BizDAO) ValidateYelp(yURL string, bearer string) (BizYelpJSN, error) {
+	request, _ := http.NewRequest("GET", yURL, nil)
 	request.Header.Add("Authorization", bearer)
 	client := &http.Client{}
 	yelpR, _ := client.Do(request)

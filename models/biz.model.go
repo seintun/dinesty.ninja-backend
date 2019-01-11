@@ -2,11 +2,6 @@ package models
 
 import "gopkg.in/mgo.v2/bson"
 
-// YelpID composes of bizID for API GET req
-type YelpID struct {
-	BusinessID string `json:"businessID"`
-}
-
 // Biz struct represents a basic information of restaurant business
 type Biz struct {
 	ID        bson.ObjectId `bson:"_id" json:"id"`
