@@ -13,6 +13,7 @@ $ brew install go
 $ mkdir -p ~/go/{pkg,src,bin}
 $ mkdir -p ~/go/src/github.com/seintun
 $ cd ~/go/src/github.com/seintun && git clone https://github.com/seintun/dinesty.ninja-backend.git
+$ cd dinesty.ninja-backend && touch config.toml
 ```
 
 ## Set Environment variables (Depends if you use Bash or Zsh):
@@ -39,9 +40,17 @@ Used for HTTP logging
 Used for dialing to MongoDB server
 ### MGo BSON (BSON)
 Used for creating BSON ObjectID
-### Gorilla Handlers (HTTP middleware)
-Used for reading config.toml file for secret or apikeys
+### Storing config keys (TOML)
+Used for reading config.toml file of mLab server and Yelp API key
 
+## Place the following line inside config.toml
+```sh
+server="<INSERT YOUR SECRET mLAB userInfo HERE INSIDE THE QUOTES>"
+database="dinesty_ninja_db"
+
+yelpURL="https://api.yelp.com/v3/businesses/"
+yelpKey="<INSERT YOUR YELP API KEY HERE INSIDE THE QUOTES>"
+```
 ## Setting up Config with mLab (inside ./config.toml)
 1. Create/Login account at https://www.yelp.com
 2. Visit https://www.yelp.com/developers/v3/manage_app to obtain your API key
