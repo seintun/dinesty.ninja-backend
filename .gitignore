@@ -1,3 +1,6 @@
+# Config File
+config.toml
+
 # Binaries for programs and plugins
 *.exe
 *.exe~
@@ -11,6 +14,17 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
-# Config File
-*.toml
-*.toml~
+# mac hidden files
+.DS_Store
+
+#other
+node_modules/
+bower_components/
+.tmp
+.sass-cache
+builds/**/images/*
+*.ogg
+*.mp3
+*.mp4
+*.png
+*.jpeg
