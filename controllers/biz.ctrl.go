@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -15,20 +14,14 @@ import (
 var config = Config{}
 var dao = BizDAO{}
 
-// GetBizYelp POST & YELP GET JSON API
-func GetBizYelp(w http.ResponseWriter, r *http.Request) {
-	rB, _ := ioutil.ReadAll(r.Body)
-	var yID YelpID
-	err := json.Unmarshal([]byte(rB), &yID)
-	if err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
-		return
-	}
+// ValidateYelp POST & YELP GET JSON API
+func ValidateYelp(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
 
 	config.Read()
-	yelpURL := config.YelpURL + yID.BusinessID
+	yURL := config.YelpURL + params["id"]
 	bearer := "Bearer " + config.YelpKey
-	biz, err := dao.FetchYelpJSN(yelpURL, bearer)
+	biz, err := dao.ValidateYelp(yURL, bearer)
 
 	if err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid YelpBiz ID")

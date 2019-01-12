@@ -14,7 +14,7 @@ func main() {
 	r := mux.NewRouter()
 
 	// HandleFun to route RESTful endpoints for /biz (business)
-	r.HandleFunc("/biz/validate", ctrl.GetBizYelp).Methods("POST")
+	r.HandleFunc("/biz/{id}/validate", ctrl.ValidateYelp).Methods("GET")
 	r.HandleFunc("/biz/register", ctrl.RegisterBiz).Methods("POST")
 	r.HandleFunc("/biz", ctrl.FetchBiz).Methods("GET")
 	r.HandleFunc("/biz/{id}", ctrl.FindBizByID).Methods("GET")
